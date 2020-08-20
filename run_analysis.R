@@ -79,7 +79,13 @@ names(extractedData)<-gsub("gravity", "Gravity", names(extractedData))
 extractedData$Subject <- as.factor(extractedData$Subject)
 extractedData <- data.table(extractedData)
 
-#create tidyData as a data set with average for each activity and subject.
+#call libraries, create tidyData as a data set with average for each activity and subject and codebook.
+version
+library(data.table)
+library(dplyr)
+library(knitr)
+
 tidyData <- aggregate(. ~Subject + Activity, extractedData, mean)
 tidyData <- tidyData[order(tidyData$Subject,tidyData$Activity),]
 write.table(tidyData, file = "Tidy.txt", row.names = FALSE)
+knit2html("codebook.Rmd")
